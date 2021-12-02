@@ -122,48 +122,18 @@ class Quadrilateral extends Figure {
 
     @Override
     public boolean isTheSame(Figure figure) {
-        if (figure == null) {
-            throw new IllegalArgumentException("second figure not exist");
+        if (figure instanceof Quadrilateral) {
+            var another = (Quadrilateral) figure;
+            double ac = length(a, c);
+            double bd = length(b, d);
+            double anotherAC = length(another.a, another.c);
+            double anotherBD = length(another.b, another.d);
+
+            return (isRelativelyEqual(ac, anotherAC) && isRelativelyEqual(bd, anotherBD)) ||
+                    isRelativelyEqual(ac, anotherBD) && isRelativelyEqual(bd, anotherAC);
+
+        } else {
+            return false;
         }
-
-        //--------------ignore---- another logic (work)------------------
-//        if (this.getClass() == figure.getClass()){
-//            Point[] points = new Point[4];
-//
-//
-//            points[0] = figure.a;
-//            points[1] = figure.b;
-//            points[2] = figure.c;
-//            points[3] = figure.d;
-//
-//            for (Point point : points) {
-//
-//                if (!a.checkSame(point)
-//                        && !b.checkSame(point)
-//                        && !c.checkSame(point)
-//                        && !d.checkSame(point))
-//
-//                    return false;
-//            }
-//        }
-
-        double delta = 0.00001;
-        double ac = Math.abs(length(a, c));
-        double bd = Math.abs(length(b, d));
-        double ca = Math.abs(length(c, a));
-        double db = Math.abs(length(d, b));
-
-        double bc = Math.abs(length(b,c));
-        double ad = Math.abs(length(a,d));
-        double cb = Math.abs(length(c,b));
-        double da = Math.abs(length(a,d));
-        double res1 = Math.abs(length(a, c)) - Math.abs(length(c, a));
-        double res2 = Math.abs(length(b, d)) - Math.abs(length(d, b));
-        // Math.abs(ac) <= delta && Math.abs(ca) <= delta || Math.abs(bd) <= delta && Math.abs(db) <= delta
-        // System.out.println("Res = " + res1 + " " + res2);
-
-        //one test can't pass
-        return Math.abs(ac) <= delta && Math.abs(ca) <= delta || Math.abs(bd) <= delta && Math.abs(db) <= delta;
-
     }
 }
